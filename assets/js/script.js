@@ -14,4 +14,28 @@ $(document).ready(function () {
         weatherFunction(searchTerm);
         forecastFunction(searchTerm);
     });
+
+    // grabs search history items from the local storage
+    var searchHistory = JSON.parse(localStorage.getItem("search-history")) || [];
+
+    // correctly sets the searchHistory array
+    if (searchHistory.length > 0) {
+        weatherFunction(searchHistory[searchHistory.length - 1]);
+    }
+    // row is then make for each element in the searchHistory array ie: all the searchTerms
+    for (var i = 0; i < searchHistory.length; i++) {
+        createRow(searchHistory[i]);
+    } 
+
+    function createRow(text) {
+        var listItem = $("<li>").addClass("list-group-item").text(text);
+        $(".searchHistory").append(listItem);
+    }
+    // click listener for list item
+    $(".searchHistory").on("click", "li", function () {
+        weatherFunction($(this).text());
+        weatherForecast($(this).text());
+    });
+    
+    
 });
