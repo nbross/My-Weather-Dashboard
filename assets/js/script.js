@@ -37,13 +37,14 @@ $(document).ready(function () {
         weatherForecast($(this).text());
     });
     
+    // function responsible for grabbing data from api and creating elements to append that data to
     function weatherFunction(searchTerm) {
 
         $.ajax({
             type: "GET",
             url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=9bbe868aa95e2e05ff8a18fa3fab1fc7&units=imperial",
 
-
+            // if searched name does exist the search bar is cleared, and not saved. But if searched name does exist it is searched saved in array and saved in local and search bar is also cleared.
         }).then(function (data) {
             if (searchHistory.indexOf(searchTerm) === -1) {
                 searchHistory.push(searchTerm);
@@ -69,11 +70,8 @@ $(document).ready(function () {
                 type: "GET",
                 url: "https://api.openweathermap.org/data/2.5/uvi?appid=9bbe868aa95e2e05ff8a18fa3fab1fc7&lat=" + lat + "&lon=" + lon,
 
-
             }).then(function (response) {
                 console.log(response);
-
-                var uvColor;
                 var uvResponse = response.value;
                 var uvIndex = $("<p>").addClass("card-text").text("UV Index: ");
                 var btn = $("<span>").addClass("btn btn-sm").text(uvResponse);
@@ -92,7 +90,7 @@ $(document).ready(function () {
 
             });
 
-            
+            // this adds all the data above to the page so the user can see 
             title.append(img);
             cardBody.append(title, temp, humid, wind);
             card.append(cardBody);
@@ -100,4 +98,6 @@ $(document).ready(function () {
             console.log(data);
         });
     }
+
+
 });
