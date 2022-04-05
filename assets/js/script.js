@@ -99,6 +99,7 @@ $(document).ready(function () {
         });
     }
 
+    // function thats responsible for creating a simple 5 day forecast
     function weatherForecast(searchTerm) {
         $.ajax({
             type: "GET",
@@ -107,7 +108,7 @@ $(document).ready(function () {
         }).then(function (data) {
             console.log(data);
             $("#forecast").html("<h4 class=\"mt-3\">5-Day Forecast:</h4>").append("<div class=\"row\">");
-
+            // this loop creates a new card for 5 days. 
             for (var i = 0; i < data.list.length; i++) {
 
                 if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
@@ -121,6 +122,7 @@ $(document).ready(function () {
                     var humidFive = $("<p>").addClass("card-text").text("Humidity: " + data.list[i].main.humidity + "%");
                     var tempFive = $("<p>").addClass("card-text").text("Temperature: " + data.list[i].main.temp + " °F");
 
+                    // puts all the data together and puts it on the page
                     colFive.append(cardFive.append(cardBodyFive.append(titleFive, imgFive, tempFive, humidFive)));
                     $("#forecast .row").append(colFive);
                 }
